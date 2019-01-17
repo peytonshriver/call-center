@@ -8,16 +8,11 @@ import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.spark.beans.Call;
 import com.revature.spark.beans.User;
 import com.revature.spark.todo.AssociateImplementation;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class CallCenterApplicationTests {
 	
 	static AssociateImplementation service = new AssociateImplementation();
@@ -96,7 +91,7 @@ public class CallCenterApplicationTests {
 	public void avgCallTimePerUser() {
 		Map<User, Double> testTotal = service.avgCallTimePerUser(calls);
 		assertEquals(64, testTotal.get(new User(1, "Dan", "Pickles")), precision);
-		assertEquals(43.3, testTotal.get(new User(2, "Randolph", "Scott")), precision);
+		assertEquals(43.3333, testTotal.get(new User(2, "Randolph", "Scott")), precision);
 		assertEquals(65, testTotal.get(new User(3, "Howard", "Johnson")), precision);
 	}
 }

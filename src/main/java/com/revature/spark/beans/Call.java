@@ -32,7 +32,7 @@ public class Call {
 	private double callTime;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="warehouse_id", nullable=false)
+	@JoinColumn(name="user_id", nullable=false)
 	@NotNull
 	private User user;
 
