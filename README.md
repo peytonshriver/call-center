@@ -1,4 +1,4 @@
-# Warehouse Inventory System
+# Call Center Application
 
 ## Setup
 Step 1: Fork this repository in GitHub
@@ -11,8 +11,8 @@ Step 2: Clone the repository locally
 
 On your machine, open up the Git Bash terminal.
 ```bash
-git clone https://github.com/your-github-username/warehouse-inventory-system.git
-cd warehouse-inventory-system/
+git clone https://github.com/your-github-username/call-center.git
+cd call-center/
 # start working...
 ```
 
@@ -47,7 +47,7 @@ Implement the methods within the `AssociateImplementation` class.
 
 ## Project requirements
 ### Java back-end
-* Implement Java methods to return the min, max, average, and median products by their price.
+* Implement Java methods to return the min, max, average, and median calls by their call time.
 * Note: these methods are to be implemented in the `com.revature.spark.todo.AssociateImplementation` class.
 * **Do not use any APIs to complete these methods.**
 
@@ -55,11 +55,11 @@ Implement the methods within the `AssociateImplementation` class.
 Implement the user interface with HTML/CSS and connect to the back-end using JavaScript and AJAX.
 
 User should be able to: 
-* Retrieve all warehouses and show the min, max, average, and median prices for each.
-* Retrieve all products and view in a table
-* Create a product and assign it to a warehouse
-* Update a product
-* Delete a product
-* BONUS: show the total assets for each warehouse
+* Retrieve all calls and show the min, max, average, and median call times 
+* Retrieve all calls and view in a table
+* Create a call and assign it to a user
+* Update a call
+* Delete a call
+* BONUS: show the average call time for each user
 
 Good luck :)
