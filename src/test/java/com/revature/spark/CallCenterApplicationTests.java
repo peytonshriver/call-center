@@ -1,4 +1,4 @@
-package com.revature.spark.callcenter;
+package com.revature.spark;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
