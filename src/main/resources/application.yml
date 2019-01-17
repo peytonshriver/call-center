@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: call-center
+server:
+  port: 9595
+  

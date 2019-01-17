@@ -1,4 +1,4 @@
-package com.revature.spark.callcenter;
+package com.revature.spark;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
