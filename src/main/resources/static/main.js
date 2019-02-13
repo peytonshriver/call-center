@@ -3,10 +3,17 @@ function ajaxReq(command,extension,callback,body){
     let xhr = new XMLHttpRequest();
     xhr.open(command,url);
     xhr.onreadystatechange=function(){
-        if(this.readyState==4 && this.status == 200)
+        if(this.readyState==4 && this.status == 200){
             callback(xhr);
-        if(this.readyState==4 && this.status == 201)
-            callback();
+            return;
+        }
+        if(this.readyState==4 && (this.status == 201 || this.status==204)){
+            callback(xhr);
+            return;
+        }
+        if(this.readyState==4){
+            callback(xhr)
+        }
     }
     if(command != "GET"){
         xhr.setRequestHeader("Content-type", "application/json")
@@ -58,7 +65,7 @@ function makeCallStatTable(){
     row = table[0].insertRow();
     setTimeout(waitASec, 100);
     function waitASec(){
-    row.insertCell(0).innerHTML = avg;
+    row.insertCell(0).innerHTML = avg.toFixed(2);
     row.insertCell(1).innerHTML = max;
     row.insertCell(2).innerHTML = median;
     row.insertCell(3).innerHTML = min;
@@ -121,9 +128,12 @@ function makeDynamicCallTable(xhr){
     row.insertCell(3).innerHTML= "Resolved";
     row.insertCell(4).innerHTML = "User"
     row.insertCell(5).innerHTML = "Options"
+    let nCID; //announcing new call id
     for(let i=0; i<allCalls.length; i++){
+        if(i==allCalls.length-1)
+            nCID = allCalls[i].id+1;
         let row = table[0].insertRow();
-        row.insertCell(0).innerHTML = "<input type='number' id='callID"+i+"' value='"+allCalls[i].id+"'>";
+        row.insertCell(0).innerHTML = "<p id='callID"+i+"'>"+allCalls[i].id+"</p>";
         row.insertCell(1).innerHTML = "<input type='number' id='callTime"+i+"' value='"+allCalls[i].callTime+"'>";
         row.insertCell(2).innerHTML = "<textarea type='text' id='notes"+i+"' rows='4' cols='50'>"+allCalls[i].notes+"</textarea>";
         if(allCalls[i].resolved==true)
@@ -136,15 +146,12 @@ function makeDynamicCallTable(xhr){
     }
     let i = allCalls.length;
     row = table[0].insertRow();
-    row.insertCell(0).innerHTML = "<input type='number' id='callID"+i+"'>";
+    row.insertCell(0).innerHTML = "<p id='callID"+i+"'>"+nCID+"</p>";
     row.insertCell(1).innerHTML = "<input type='number' id='callTime"+i+"'>";
     row.insertCell(2).innerHTML = "<textarea type='text' id='notes"+i+"' rows='4' cols='50'></textarea>";
     row.insertCell(3).innerHTML = "<select id='resolved"+i+"'><option value='true'>true</option><option value='false'>false</option></select>";
     row.insertCell(4).innerHTML = "User ID:   " + "<input type='number' id='userID"+i+"'>" + "<br>" + "First Name: " + "<input type='text' id='firstName"+i+"'>"+ " <br> Last Name:" + "<input type='text' id='lastName"+i+"'>";
     row.insertCell(5).innerHTML = "<button id='create"+i+"' onClick='doCreate(this.id)'>Create</button>";
-    console.log(i);
-
-
 }
 function doDelete(bId){
     let i = String(bId).split("e")[3];
@@ -162,12 +169,19 @@ function doCreate(bId){
     let body = getBody(i);
     ajaxReq("POST","/call",alertGood, body);
 }
-function alertGood(){
-    alert("Success")
+function alertGood(xhr){
+    if(xhr.status==201 || xhr.status== 204){
+        alert("Success");
+    }else{
+        alert("Action failed, try again!");}
+    document.getElementsByClassName("table")[0].innerHTML = "";
+    getDynamicCallTable();
+
+
 }
 function  getBody(i){
     let body= { callTime: document.getElementById("callTime"+i).value,
-        id: document.getElementById("callID"+i).value,
+        id: document.getElementById("callID"+i).innerHTML,
         notes: document.getElementById("notes"+i).value,
         resolved: document.getElementById("resolved"+i).value,
         user: {
@@ -179,6 +193,19 @@ function  getBody(i){
     return body;
     
 }
+let userDropDown;
+function createUserDropdown(){
+    ajaxReq("GET","/user/all",makeUserDropDown);
+}
+function makeUserDropDown(xhr){
+    let allUsers = JSON.parse(xhr.response);
+
+    for(let i = 0; i<allUsers.length; i++){
+        userDropDown += "<option uID='"+allUsers[0].id+"'>"+allUsers[0].id+". "+allUsers[i].firstName+" "+allUsers[i].lastName+"<option>";
+    }
+
+}
+
 //event listeners
 //for info.html
 if(window.location.pathname == "/info.html"){
