@@ -77,37 +77,28 @@ public class AssociateImplementation {
 	 * @return
 	 */
 	public Double median(List<Call> calls) {
-		double[] timeArr = new double[calls.size()];
-		for(int i = 0; i<calls.size(); i++) {
-			timeArr[i] = calls.get(i).getCallTime();
-		}
-		dubArrBubSort(timeArr);
-		double medTime = 0.0;
-		if(timeArr.length%2 == 0) {
-			medTime = (timeArr[timeArr.length/2]+timeArr[(timeArr.length/2)-1])/2;
-		}else {
-			medTime = timeArr[((timeArr.length)-1)/2];
-		}
-		return medTime;
-	}
-	
-	private static void dubArrBubSort(double[] timeArr) {//helper function
-		double temp = 0.0;
+		Call temp = new Call();
 		boolean notSorted = true;
 		while(notSorted) {
 			notSorted = false;
-			for(int i = 0; i<timeArr.length-1; i++) {
-				if (timeArr[i] > timeArr[i+1]) {
-					temp = timeArr[i];
-					timeArr[i] = timeArr[i+1];
-					timeArr[i+1] = temp;
+			for(int i = 0; i<calls.size()-1; i++) {
+				if (calls.get(i).getCallTime() > calls.get(i+1).getCallTime()) {
+					temp = calls.get(i);
+					calls.set(i,calls.get(i+1));
+					calls.set(i+1, temp);
 					notSorted = true;
 				}
 			}
 		}
-		return;
+		double medTime = 0.0;
+		if(calls.size()%2 == 0) {
+			medTime = (calls.get(calls.size()/2).getCallTime()+ calls.get((calls.size()/2)-1).getCallTime())/2;
+		}else {
+			medTime = calls.get(((calls.size())-1)/2).getCallTime();
+		}
+		return medTime;
 	}
-
+	
 	/**
 	 * !! BONUS CHALLENGE REQUIREMENT !!
 	 * 
