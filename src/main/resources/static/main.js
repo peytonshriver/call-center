@@ -158,7 +158,7 @@ function makeDynamicCallTable(xhr){
         let row = table[0].insertRow();
         row.insertCell(0).innerHTML = "<p id='callID"+i+"'>"+allCalls[i].id+"</p>";//stand alone i is to make sure all the ids of collums are unique and correspond to the row number
         row.insertCell(1).innerHTML = "<input type='number' id='callTime"+i+"' value='"+allCalls[i].callTime+"'>";
-        row.insertCell(2).innerHTML = "<textarea type='text' id='notes"+i+"' rows='4' cols='50'>"+allCalls[i].notes+"</textarea>";
+        row.insertCell(2).innerHTML = "<textarea type='text' id='notes"+i+"'>"+allCalls[i].notes+"</textarea>";
         if(allCalls[i].resolved==true)
             row.insertCell(3).innerHTML = "<select id='resolved"+i+"'><option value='true'>true</option><option value='false'>false</option></select>";
         else
@@ -177,7 +177,7 @@ function makeDynamicCallTable(xhr){
     row = table[0].insertRow();// This row is responsible for taking new info to create a new call
     row.insertCell(0).innerHTML = "<p id='callID"+i+"'>"+nCID+"</p>";
     row.insertCell(1).innerHTML = "<input type='number' id='callTime"+i+"'>";
-    row.insertCell(2).innerHTML = "<textarea type='text' id='notes"+i+"' rows='4' cols='50'></textarea>";
+    row.insertCell(2).innerHTML = "<textarea type='text' id='notes"+i+"'></textarea>";
     row.insertCell(3).innerHTML = "<select id='resolved"+i+"'><option value='true'>true</option><option value='false'>false</option></select>";
     row.insertCell(4).innerHTML = "<select id='userID"+i+"'>"+userDropDown+"</select>"
     row.insertCell(5).innerHTML = "<button id='create"+i+"' onClick='doCreate(this.id)'>Create</button>";
